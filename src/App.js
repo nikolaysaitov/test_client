@@ -17,11 +17,17 @@ function App() {
   const numberQueue = 3;
 
   const [isDown, setIsDown] = useState(false);
+  const [isActive, setIsActive] = useState(false);
+
+  // const handleClickArrow = () => {
+  //   setIsActive(!isActive);
+  // };
 
   const handleClick = () => {
     setIsDown(!isDown);
+    setIsActive(!isActive);
   };
-
+  
   return (
     <MapContainer
       center={[43.10845774857224, 131.94015208935897]}
@@ -46,8 +52,8 @@ function App() {
           isDown ? "down" : ""
         }`}
       >
-        <button className="btn_swipe" onClick={handleClick}>
-          ...
+        <button   className={isActive ? 'btn_swipe mb-2 mt-3 toggle-btn active' : 'btn_swipe mb-2 mt-3 toggle-btn'}onClick={handleClick} >
+        <span class="arrow"></span>
         </button>
         <p className="text-center mt-1 mb-2 info">
           Информация о заказе № {numberOrder}

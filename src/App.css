@@ -56,3 +56,51 @@
 .info{
   font-size: 15px;
 }
+
+
+/* toggle arrow */
+
+
+.toggle-btn {
+
+}
+
+.arrow {
+  
+  top: 20px;
+  right: 20px;
+}
+
+.arrow::before,
+.arrow::after {
+  position: relative;
+  content: '';
+  display: block;
+  width: 10px;
+  height: 2px;
+  background: rgba(0, 0, 0, 0.5);
+  transition: 0.3s ease-in-out;
+}
+
+.arrow::before {
+  transform: rotate(45deg);
+}
+
+.arrow::after {
+  left: 6px;
+  top: -2px;
+  transform: rotate(-45deg);
+}
+
+
+.toggle-btn {
+
+}
+
+.toggle-btn.active .arrow::before {
+  transform: rotate(-45deg);
+}
+
+.toggle-btn.active .arrow::after {
+  transform: rotate(45deg);
+}
