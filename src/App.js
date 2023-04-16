@@ -30,18 +30,33 @@ function App() {
     setIsActive(!isActive);
   };
 
-  const [down, setDown] = useState(false);
+  const [swipeDirection, setSwipeDirection] = useState(null);
 
-  const handleTouchStart = (e) => {
-    if (e.touches[0].clientY < window.innerHeight / 2) {
-      setDown(false);
-    } else {
-      setDown(true);
-    }
+  const handleTouchStart = (event) => {
+    setSwipeDirection(null);
+    const touch = event.touches[0];
+    setSwipeDirection({ x: touch.clientX, y: touch.clientY });
   };
 
-  const handleTouchEnd = () => {
-    setDown(false);
+  const handleTouchEnd = (event) => {
+    const touch = event.changedTouches[0];
+    const xDiff = touch.clientX - swipeDirection.x;
+    const yDiff = touch.clientY - swipeDirection.y;
+    if (Math.abs(xDiff) > Math.abs(yDiff)) {
+      if (xDiff > 0) {
+        // swipe right
+      } else {
+        // swipe left
+      }
+    } else {
+      if (yDiff > 0) {
+        // swipe down
+        setSwipeDirection("down");
+      } else {
+        // swipe up
+        setSwipeDirection("up");
+      }
+    }
   };
   
   return (
@@ -64,9 +79,10 @@ function App() {
         <Popup>Владивосток, ул Борисенко, д 76, кв 7</Popup>
       </Marker>
       <div
-        className={`div_block d-flex flex-column align-items-center ${down ? "down" : ""}`}
-        onTouchStart={handleTouchStart}
-        onTouchEnd={handleTouchEnd}
+      className={swipeDirection === "down" ? "div_block block d-flex flex-column align-items-center down" : "div_block block d-flex flex-column align-items-center"}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
+
         
       >
         <button   className={isActive ? 'btn_swipe mb-2 mt-3 toggle-btn active' : 'btn_swipe mb-2 mt-3 toggle-btn'}onClick={handleClick} >
