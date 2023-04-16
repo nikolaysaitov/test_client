@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { data } from "./dataMap";
-import wa from "./wa.svg";
+import wa from "../src/images/wa.svg";
 
 function OrderInfo() {
   const numberOrder = data[0].order_number;

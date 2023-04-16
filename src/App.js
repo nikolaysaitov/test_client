@@ -3,8 +3,8 @@ import { MapContainer } from "react-leaflet";
 import { Popup } from "react-leaflet/Popup";
 import { Marker } from "react-leaflet/Marker";
 import OrderInfo from "../src/OrderInfo";
-import { IconTruck } from "./Icon";
-
+import IconTruck from "../src/icons/IconTruck";
+import IconFinish from "../src/icons/IconFinish";
 
 import { data } from "./dataMap";
 
@@ -14,21 +14,29 @@ import { useState, useEffect } from "react";
 function App() {
   const position1 = [43.12946813445861, 131.91973799704812];
   const position2 = [43.117324713258924, 131.90667297796918];
+  const clientCoordinates = [
+    data[0].client_coordinates.lat,
+    data[0].client_coordinates.lon,
+  ];
 
+  console.log([data[0].last_courier_point.lat, data[0].last_courier_point.lon]);
 
-  console.log([data[0].last_courier_point.lat, data[0].last_courier_point.lon])
-
-  const [lastCourierPoint, setLastCourierPoint] = useState([data[0].last_courier_point.lat, data[0].last_courier_point.lon]);
+  const [lastCourierPoint, setLastCourierPoint] = useState([
+    data[0].last_courier_point.lat,
+    data[0].last_courier_point.lon,
+  ]);
 
   useEffect(() => {
-    setLastCourierPoint([data[0].last_courier_point.lat, data[0].last_courier_point.lon]);
+    setLastCourierPoint([
+      data[0].last_courier_point.lat,
+      data[0].last_courier_point.lon,
+    ]);
   }, []);
-
 
   return (
     <>
       <MapContainer
-        center={[43.10845774857224, 131.94015208935897]}
+        center={[43.0956391, 131.9037986]}
         zoom={13}
         scrollWheelZoom={false}
       >
@@ -42,8 +50,11 @@ function App() {
         <Marker position={position2}>
           <Popup>Владивосток, ул Калинина, д 149, кв 3</Popup>
         </Marker>
-        <Marker position={lastCourierPoint} icon={ IconTruck }>
+        <Marker position={lastCourierPoint} icon={IconTruck}>
           <Popup>Владивосток, ул Борисенко, д 76, кв 7</Popup>
+        </Marker>
+        <Marker position={clientCoordinates} icon={IconFinish}>
+          <Popup>Финишная точка</Popup>
         </Marker>
       </MapContainer>
       <OrderInfo />
