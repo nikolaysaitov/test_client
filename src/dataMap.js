@@ -21,7 +21,7 @@ export const data = [
         ],
         "last_courier_point": {
             "lat": 43.1015497,
-            "lon": 131.9227305,
+            "lon": 131.9227309,
             "type": "walking"
         }
     }
