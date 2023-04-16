@@ -11,7 +11,7 @@ body {
 
 .div_block{
   width: 100%;
-  height: 40vh;
+  height: 50vh;
   background: white;
   z-index: 1001;
   position: absolute;
@@ -30,7 +30,7 @@ body {
 }
 
 .down {
-  transform: translateY(45%);
+  transform: translateY(57%);
 }
 .bi-telephone-fill_color{
   color:white;
