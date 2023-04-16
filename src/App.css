@@ -1,5 +1,6 @@
 body {
   position: relative;
+  height: 100vh;
 }
 
 .leaflet-container {
@@ -13,7 +14,7 @@ body {
   background: white;
   z-index: 1001;
   position: absolute;
-  border-radius: 29px;
+  border-radius: 29px 29px 0px 0px;
   bottom: 0px;
 }
 
@@ -114,4 +115,5 @@ body {
     width: 46px;
     height: 4px;
     background-color: #808080c7;
+    z-index: 1002;
 }
