@@ -2,26 +2,58 @@ import { TileLayer } from "react-leaflet/TileLayer";
 import { MapContainer } from "react-leaflet";
 import { Popup } from "react-leaflet/Popup";
 import { Marker } from "react-leaflet/Marker";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+
+import { data } from "./dataMap";
 
 import wa from'./wa.svg'
 
 import "./App.css";
 
+
+
 function App() {
   const position1 = [43.12946813445861, 131.91973799704812];
   const position2 = [43.117324713258924, 131.90667297796918];
-  const position3 = [43.12700984501239, 131.90534606196897];
-  const numberOrder = 344236;
-  const timeDelivery = "15:45 19 Мая 2023г.";
-  const numberQueue = 3;
+  const position3 = [data[0].past_client_coordinates[0].lat, data[0].past_client_coordinates[0].lon];
+  const numberOrder = data[0].order_number;
+  const timeDelivery = data[0].delivery_datetime;
+  const numberQueue = data[0].client_position;
 
   const [isDown, setIsDown] = useState(false);
   const [isActive, setIsActive] = useState(false);
 
-  // const handleClickArrow = () => {
-  //   setIsActive(!isActive);
-  // };
+  const [down, setDown] = useState(false);
+  const [swipe, setSwipe] = useState(null);
+
+  function handleTouchStart(event, setSwipe) {
+    setSwipe({ x: event.touches[0].clientX, y: event.touches[0].clientY });
+  }
+  
+  function handleTouchMove(event, swipe, setSwipe, setDown) {
+    if (!swipe) {
+      return;
+    }
+    const deltaX = Math.abs(event.touches[0].clientX - swipe.x);
+    const deltaY = Math.abs(event.touches[0].clientY - swipe.y);
+    if (deltaY > deltaX) {
+      if (event.touches[0].clientY > swipe.y) {
+        setDown(true);
+      } else {
+        setDown(false);
+      }
+    }
+    setSwipe(null);
+  }
+
+  useEffect(() => {
+    window.addEventListener('touchstart', (event) => handleTouchStart(event, setSwipe));
+    window.addEventListener('touchmove', (event) => handleTouchMove(event, swipe, setSwipe, setDown));
+    return () => {
+      window.removeEventListener('touchstart', (event) => handleTouchStart(event, setSwipe));
+      window.removeEventListener('touchmove', (event) => handleTouchMove(event, swipe, setSwipe, setDown));
+    }
+  }, [swipe]);
 
   const handleClick = () => {
     setIsDown(!isDown);
@@ -47,10 +79,7 @@ function App() {
       <Marker position={position3}>
         <Popup>Владивосток, ул Борисенко, д 76, кв 7</Popup>
       </Marker>
-      <div
-        className={`div_block d-flex flex-column align-items-center ${
-          isDown ? "down" : ""
-        }`}
+      <div className={`div_block d-flex flex-column align-items-center ${down ? ' down' : ''}`}
       >
         <button   className={isActive ? 'btn_swipe mb-2 mt-3 toggle-btn active' : 'btn_swipe mb-2 mt-3 toggle-btn'}onClick={handleClick} >
         <span class="arrow"></span>
