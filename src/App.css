@@ -104,3 +104,10 @@
 .toggle-btn.active .arrow::after {
   transform: rotate(45deg);
 }
+
+.swipe_line{
+  border: none;
+    width: 46px;
+    height: 4px;
+    background-color: #808080c7;
+}

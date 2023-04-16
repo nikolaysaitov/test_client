@@ -18,17 +18,13 @@ function App() {
   const timeDelivery = data[0].delivery_datetime;
   const numberQueue = data[0].client_position;
 
-  const [isDown, setIsDown] = useState(false);
-  const [isActive, setIsActive] = useState(false);
+  // const [isDown, setIsDown] = useState(false);
+  // const [isActive, setIsActive] = useState(false);
 
-  // const handleClickArrow = () => {
+  // const handleClick = () => {
+  //   setIsDown(!isDown);
   //   setIsActive(!isActive);
   // };
-
-  const handleClick = () => {
-    setIsDown(!isDown);
-    setIsActive(!isActive);
-  };
 
   const [swipeDirection, setSwipeDirection] = useState(null);
 
@@ -85,8 +81,8 @@ function App() {
 
         
       >
-        <button   className={isActive ? 'btn_swipe mb-2 mt-3 toggle-btn active' : 'btn_swipe mb-2 mt-3 toggle-btn'}onClick={handleClick} >
-        <span className="arrow"></span>
+        <button className="swipe_line mt-2 mb-1" >
+        {/* <span className="arrow"></span> */}
         </button>
         <p className="text-center mt-1 mb-2 info">
           Информация о заказе № {numberOrder}
