@@ -1,6 +1,7 @@
 body {
   position: relative;
   height: 100vh;
+  overflow: hidden;
 }
 
 .leaflet-container {
@@ -61,7 +62,9 @@ body {
 .info{
   font-size: 15px;
 }
-
+.text-center_small{
+font-size: 12px;
+}
 
 /* toggle arrow */
 

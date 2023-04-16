@@ -61,13 +61,13 @@ function OrderInfo() {
       <p className="text-center mt-1 mb-2 info">
         Информация о заказе № {numberOrder}
       </p>
-      <p className="text-center mt-1 mb-1">
+      <p className="text-center text-center_small mt-1 mb-1">
         Плановое время доставки: {timeDelivery}
       </p>
-      <p className="text-center mt-1 mb-1">
+      <p className="text-center text-center_small mt-1 mb-1">
         Ваш номер в очереди: {numberQueue}
       </p>
-      <p className="text-center mt-4 mb-4">
+      <p className="text-center text-center_small mt-4 mb-4">
         Если вы столкнулись с трудностями, мы сделаем всё, от нас зависящее.
         Чтобы связаться с нами, звоните по номеру телефона: +7999 777 1667
       </p>
