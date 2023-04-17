@@ -1,12 +1,10 @@
 import React from "react";
 import { useState } from "react";
-import { data } from "./dataMap";
+// import { data } from "./dataMap";
 import wa from "../src/images/wa.svg";
 
-function OrderInfo() {
-  const numberOrder = data[0].order_number;
-  const timeDelivery = data[0].delivery_datetime;
-  const numberQueue = data[0].client_position;
+function OrderInfo(props) {
+
 
   // const [isDown, setIsDown] = useState(false);
   // const [isActive, setIsActive] = useState(false);
@@ -59,13 +57,13 @@ function OrderInfo() {
         {/* <span className="arrow"></span> */}
       </button>
       <p className="text-center mt-1 mb-2 info">
-        Информация о заказе № {numberOrder}
+        Информация о заказе № {props.numberOrder}
       </p>
       <p className="text-center text-center_small mt-1 mb-1">
-        Плановое время доставки: {timeDelivery}
+        Плановое время доставки: {props.timeDelivery}
       </p>
       <p className="text-center text-center_small mt-1 mb-1">
-        Ваш номер в очереди: {numberQueue}
+        Ваш номер в очереди: {props.numberQueue}
       </p>
       <p className="text-center text-center_small mt-4 mb-4">
         Если вы столкнулись с трудностями, мы сделаем всё, от нас зависящее.

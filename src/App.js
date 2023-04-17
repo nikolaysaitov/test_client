@@ -1,3 +1,5 @@
+import { useState, useEffect } from "react";
+
 import { TileLayer } from "react-leaflet/TileLayer";
 import { MapContainer } from "react-leaflet";
 import { Popup } from "react-leaflet/Popup";
@@ -6,32 +8,108 @@ import OrderInfo from "../src/OrderInfo";
 import IconTruck from "../src/icons/IconTruck";
 import IconFinish from "../src/icons/IconFinish";
 
-import { data } from "./dataMap";
-
 import "./App.css";
-import { useState, useEffect } from "react";
 
 function App() {
-  const position1 = [43.12946813445861, 131.91973799704812];
-  const position2 = [43.117324713258924, 131.90667297796918];
-  const clientCoordinates = [
-    data[0].client_coordinates.lat,
-    data[0].client_coordinates.lon,
-  ];
+//Рабочий вариант работы с АПИшкой
+  // const [clientLat, setClientLat] = useState("");
+  // const [clientLon, setClientLon] = useState("");
 
-  console.log([data[0].last_courier_point.lat, data[0].last_courier_point.lon]);
+  // const [lastCourierLat, setLastCourierLat] = useState("");
+  // const [lastCourierLon, setLastCourierLon] = useState("");
 
-  const [lastCourierPoint, setLastCourierPoint] = useState([
-    data[0].last_courier_point.lat,
-    data[0].last_courier_point.lon,
-  ]);
+  // const [markers, setMarkers] = useState("");
+
+  // const [numberOrder, setNumberOrder] = useState("");
+  // const [timeDelivery, setTimeDelivery] = useState("");
+  // const [numberQueue, setNumberQueue] = useState("");
+
+
+  // useEffect(() => {
+  //   fetch("http://192.168.104.187:8000/api/v1/client/?slug=gDUGOC4C9u")
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       const dataOrder = data;
+  //       setClientLat(dataOrder.client_coordinates.lat);
+  //       setClientLon(dataOrder.client_coordinates.lon);
+
+  //       setLastCourierLat(dataOrder.last_courier_point.lat);
+  //       setLastCourierLon(dataOrder.last_courier_point.lon);
+
+  //       setMarkers(
+  //         dataOrder.past_client_coordinates.map((coords, index) => (
+  //           <Marker key={index} position={[coords.lat, coords.lon]} />
+  //         ))
+  //       );
+
+  //       setNumberOrder(dataOrder.order_number);
+  //       setTimeDelivery(dataOrder.delivery_datetime);
+  //       setNumberQueue(dataOrder.client_position);
+
+  //       console.log("Data:", dataOrder);
+  //     })
+  //     .catch((error) => console.error(error));
+  // }, []);
+
+  // const clientCoordinates = [clientLat, clientLon];
+  // const lastCourierPoint = [lastCourierLat, lastCourierLon];
+
+//Рефакторинг рабочего варианта работы с АПИшкой
+  const [clientCoordinates, setClientCoordinates] = useState({
+    lat: "",
+    lon: "",
+  });
+  const [lastCourierPoint, setLastCourierPoint] = useState({
+    lat: "",
+    lon: "",
+  });
+
+  const [orderDetails, setOrderDetails] = useState({
+    numberOrder: "",
+    timeDelivery: "",
+    numberQueue: "",
+  });
+
+  const { numberOrder, timeDelivery, numberQueue } = orderDetails;
+
+  const [markers, setMarkers] = useState("");
+
+
+ 
 
   useEffect(() => {
-    setLastCourierPoint([
-      data[0].last_courier_point.lat,
-      data[0].last_courier_point.lon,
-    ]);
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          "http://192.168.104.187:8000/api/v1/client/?slug=gDUGOC4C9u"
+        );
+        const data = await response.json();
+        const dataOrder = data;
+
+        setClientCoordinates(dataOrder.client_coordinates);
+        setLastCourierPoint(dataOrder.last_courier_point);
+
+        setMarkers(
+          dataOrder.past_client_coordinates.map((coords, index) => (
+            <Marker key={index} position={[coords.lat, coords.lon]} />
+          ))
+        );
+
+        setOrderDetails({
+          numberOrder: dataOrder.order_number,
+          timeDelivery: dataOrder.delivery_datetime,
+          numberQueue: dataOrder.client_position,
+        });
+
+        console.log("Data:", dataOrder);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchData();
   }, []);
+
+
 
   return (
     <>
@@ -44,20 +122,19 @@ function App() {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        <Marker position={position1}>
-          <Popup>Владивосток, ул Гульбиновича, д 8 к 2, кв 5</Popup>
-        </Marker>
-        <Marker position={position2}>
-          <Popup>Владивосток, ул Калинина, д 149, кв 3</Popup>
-        </Marker>
+        {markers}
         <Marker position={lastCourierPoint} icon={IconTruck}>
-          <Popup>Владивосток, ул Борисенко, д 76, кв 7</Popup>
+          <Popup></Popup>
         </Marker>
         <Marker position={clientCoordinates} icon={IconFinish}>
-          <Popup>Финишная точка</Popup>
+          <Popup></Popup>
         </Marker>
       </MapContainer>
-      <OrderInfo />
+      <OrderInfo
+        numberOrder={numberOrder}
+        timeDelivery={timeDelivery}
+        numberQueue={numberQueue}
+      />
     </>
   );
 }
