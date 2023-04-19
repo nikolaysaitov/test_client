@@ -101,7 +101,7 @@ function OrderInfo(props) {
             </a>
           </div>
           <div>
-            <a href={`https://wa.me/7981185045?text=Привет,%20есть%20вопросики%20по%20заказу%20№%20${number}`}>
+            <a href={`https://wa.me/79811855045?text=Привет,%20есть%20вопросики%20по%20заказу%20№%20${number}`}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 x="0px"
