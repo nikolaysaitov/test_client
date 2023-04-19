@@ -11,6 +11,7 @@ function OrderInfo(props) {
   //   setIsDown(!isDown);
   //   setIsActive(!isActive);
   // };
+  const number = 533425326;
 
   const [swipeDirection, setSwipeDirection] = useState(null);
 
@@ -68,7 +69,7 @@ function OrderInfo(props) {
         Чтобы связаться с нами, звоните по номеру телефона: +7999 777 1667
       </p>
       <div className="div_call">
-        <a href="tel:+79999999999">
+        <a href="tel:88007070606">
           <button className="button_call">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -100,7 +101,7 @@ function OrderInfo(props) {
             </a>
           </div>
           <div>
-            <a href="https://wa.me/+7981185045">
+            <a href={`https://wa.me/7981185045?text=Привет,%20есть%20вопросики%20по%20заказу%20№%20${number}`}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 x="0px"
